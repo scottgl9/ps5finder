@@ -62,3 +62,16 @@ if __name__ == '__main__':
     if request_text_exists(psdirect_digital_url, ["<p class=\"sony-text-body-1\">Out of Stock</p>", "We’re experiencing very high traffic."]):
         print("out of stock")
 
+    psdirect_url = "https://direct.playstation.com/en-us/consoles/console/playstation5-console.3005816"
+    if request_text_exists(psdirect_url, ["<p class=\"sony-text-body-1\">Out of Stock</p>", "We’re experiencing very high traffic."]):
+        print("out of stock")
+
+    gamestop_digital_url = "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5-digital-edition/11108141.html"
+    if request_text_exists(gamestop_digital_url, ["data-buttontext=\"Add to Cart\" disabled=\"disabled\">Not Available</button>"]):
+        print("out of stock")
+
+    gamestop_url = "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5/11108140.html"
+    if request_text_exists(gamestop_url, ["data-buttontext=\"Add to Cart\" disabled=\"disabled\">Not Available</button>"]):
+        print("out of stock")
+
+
