@@ -48,6 +48,9 @@ def request_text_exists(url, tlist):
 
     return False
 
+def alert():
+    os.system('play -nq -t alsa synth {} sine {}'.format(60, 440))
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-r', action='store', dest='refresh',
@@ -56,22 +59,28 @@ if __name__ == '__main__':
 
     results = parser.parse_args()
 
-    refresh = results.refresh
+    refresh = int(results.refresh)
 
-    psdirect_digital_url = "https://direct.playstation.com/en-us/consoles/console/playstation5-digital-edition-console.3005817"
-    if request_text_exists(psdirect_digital_url, ["<p class=\"sony-text-body-1\">Out of Stock</p>", "We’re experiencing very high traffic."]):
-        print("out of stock")
+    print("Starting PS5 finder...")
 
-    psdirect_url = "https://direct.playstation.com/en-us/consoles/console/playstation5-console.3005816"
-    if request_text_exists(psdirect_url, ["<p class=\"sony-text-body-1\">Out of Stock</p>", "We’re experiencing very high traffic."]):
-        print("out of stock")
+    while True:
+        psdirect_digital_url = "https://direct.playstation.com/en-us/consoles/console/playstation5-digital-edition-console.3005817"
+        if not request_text_exists(psdirect_digital_url, ["<p class=\"sony-text-body-1\">Out of Stock</p>"]): #, "We’re experiencing very high traffic."]):
+            print("IN STOCK")
+            alert()
 
-    gamestop_digital_url = "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5-digital-edition/11108141.html"
-    if request_text_exists(gamestop_digital_url, ["data-buttontext=\"Add to Cart\" disabled=\"disabled\">Not Available</button>"]):
-        print("out of stock")
+        psdirect_url = "https://direct.playstation.com/en-us/consoles/console/playstation5-console.3005816"
+        if not request_text_exists(psdirect_url, ["<p class=\"sony-text-body-1\">Out of Stock</p>"]): #, "We’re experiencing very high traffic."]):
+            print("IN STOCK")
+            alert()
 
-    gamestop_url = "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5/11108140.html"
-    if request_text_exists(gamestop_url, ["data-buttontext=\"Add to Cart\" disabled=\"disabled\">Not Available</button>"]):
-        print("out of stock")
+        #gamestop_digital_url = "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5-digital-edition/11108141.html"
+        #if request_text_exists(gamestop_digital_url, ["\",\"availability\":\"Not Available\","]):
+        #    print("out of stock")
 
+        #gamestop_url = "https://www.gamestop.com/video-games/playstation-5/consoles/products/playstation-5/11108140.html"
+        #if request_text_exists(gamestop_url, ["&quot;Not Available&quot;"]):
+        #    print("out of stock")
+
+        time.sleep(refresh)
 
